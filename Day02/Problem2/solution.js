@@ -6,14 +6,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const input = readInputFileToArray(path.join(__dirname, '../input.txt'));
 
 const isValidPassword = (requirements, password) => {
-  const keys = Object.keys(requirements);
-  for (const key of keys) {
-    if ((password[requirements[key].pos1] === key) +
-        (password[requirements[key].pos2] === key) !== 1) {
-      return false;
-    }
-  }
-  return true;
+  return !Object.keys(requirements).some(key => {
+    return (password[requirements[key].pos1] === key) +
+          (password[requirements[key].pos2] === key) !== 1;
+  });
 };
 
 const parseRequirementsWithPassword = (requirementsWithPassword) => {
